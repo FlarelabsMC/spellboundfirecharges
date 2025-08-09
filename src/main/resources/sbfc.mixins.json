@@ -5,9 +5,12 @@
   "refmap": "${mod_id}.refmap.json",
   "mixins": [
     "AmendmentsClientMixin",
+    "ClientSpellCastHelperMixin",
     "MagicFireballMixin",
     "MediumFireballMixin"
   ],
-  "client": [],
+  "client": [
+    "FireballRendererMixin"
+  ],
   "minVersion": "0.8.5"
 }

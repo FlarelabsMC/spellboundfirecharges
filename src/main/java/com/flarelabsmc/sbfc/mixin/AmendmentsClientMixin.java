@@ -13,8 +13,19 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(AmendmentsClient.class)
 public class AmendmentsClientMixin {
-    @Redirect(method = "registerEntityRenderers", at = @At(value = "INVOKE", target = "Lnet/mehvahdjukaar/moonlight/api/platform/ClientHelper$EntityRendererEvent;register(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V"), remap = false)
-    private static <E extends Projectile> void sbfc$replaceEntityRenderers(ClientHelper.EntityRendererEvent instance, EntityType<? extends E> entityType, EntityRendererProvider<E> eEntityRendererProvider) {
+    @Redirect(
+            method = "registerEntityRenderers",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/mehvahdjukaar/moonlight/api/platform/ClientHelper$EntityRendererEvent;register(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V"
+            ),
+            remap = false
+    )
+    private static <E extends Projectile> void sbfc$replaceEntityRenderers(
+            ClientHelper.EntityRendererEvent instance,
+            EntityType<? extends E> entityType,
+            EntityRendererProvider<E> eEntityRendererProvider
+    ) {
         if (entityType == ModRegistry.MEDIUM_FIREBALL.get()) {
             instance.register(entityType, ReplacedMediumFireballRenderer::new);
         } else {

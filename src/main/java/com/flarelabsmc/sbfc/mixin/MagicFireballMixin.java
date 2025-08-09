@@ -8,9 +8,7 @@ import net.mehvahdjukaar.amendments.common.ProjectileStats;
 import net.mehvahdjukaar.amendments.common.entity.FireballExplosion;
 import net.mehvahdjukaar.amendments.reg.ModRegistry;
 import net.mehvahdjukaar.moonlight.api.entity.ParticleTrailEmitter;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,14 +29,21 @@ public class MagicFireballMixin {
         if (fireball.level().isClientSide) {
             this.sbfc$trailEmitter.tick(fireball, (p, v) -> {
                 if (!fireball.isInWater()) {
-                    fireball.level().addParticle((ParticleOptions) ModRegistry.FIREBALL_TRAIL_PARTICLE.get(), p.x, p.y, p.z, (double)fireball.getBbWidth(), (double)0.0F, (double)0.0F);
+                    fireball.level().addParticle(ModRegistry.FIREBALL_TRAIL_PARTICLE.get(), p.x, p.y, p.z, fireball.getBbWidth(), 0.0d, 0.0d);
                 }
             });
         }
         ci.cancel();
     }
 
-    @Redirect(method = "onHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Explosion;explode()V"), remap = false)
+    @Redirect(
+            method = "onHit",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/level/Explosion;explode()V"
+            ),
+            remap = false
+    )
     private void sbfc$amendmentsOnHit0(Explosion instance) {
         MagicFireball fireball = (MagicFireball) (Object) this;
         boolean bl = ServerConfigs.SPELL_GREIFING.get();
@@ -47,15 +52,28 @@ public class MagicFireballMixin {
         settings.hasKnockback = false;
         settings.soundVolume = ProjectileStats.PLAYER_FIREBALL.soundVolume();
         settings.onFireTicks = ProjectileStats.PLAYER_FIREBALL.indirectHitFireTicks();
-        settings.maxDamage = ProjectileStats.PLAYER_FIREBALL.normalExplosionRadius() + 1.0F;
-        FireballExplosion.explodeServer(fireball.level(), fireball, ((AbstractSpell) SpellRegistry.FIREBALL_SPELL.get()).getDamageSource(fireball, fireball.getOwner()), (ExplosionDamageCalculator)null, fireball.getX(), fireball.getY(), fireball.getZ(), fireball.getExplosionRadius() / 2.0F, bl, interaction, settings);
+        settings.maxDamage = ProjectileStats.PLAYER_FIREBALL.normalExplosionRadius() + 1.0f;
+        FireballExplosion.explodeServer(fireball.level(), fireball, ((AbstractSpell) SpellRegistry.FIREBALL_SPELL.get()).getDamageSource(fireball, fireball.getOwner()), null, fireball.getX(), fireball.getY(), fireball.getZ(), fireball.getExplosionRadius() / 2.0f, bl, interaction, settings);
     }
 
-    @Redirect(method = "onHit", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeConfigSpec$ConfigValue;get()Ljava/lang/Object;"), remap = false)
+    @Redirect(
+            method = "onHit",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraftforge/common/ForgeConfigSpec$ConfigValue;get()Ljava/lang/Object;"
+            ),
+            remap = false
+    )
     private Object sbfc$amendmentsOnHit1(ForgeConfigSpec.ConfigValue<Boolean> instance) {
         return true;
     }
 
-    @Redirect(method = "onHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Explosion;finalizeExplosion(Z)V"), remap = false)
+    @Redirect(
+            method = "onHit",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/level/Explosion;finalizeExplosion(Z)V"),
+            remap = false
+    )
     private void sbfc$amendmentsOnHit2(Explosion instance, boolean blockentity) {}
 }

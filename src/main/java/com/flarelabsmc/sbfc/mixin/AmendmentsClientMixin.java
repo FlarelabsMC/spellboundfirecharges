@@ -1,7 +1,6 @@
 package com.flarelabsmc.sbfc.mixin;
 
 import com.flarelabsmc.sbfc.client.renderer.ReplacedMediumFireballRenderer;
-import io.redspace.ironsspellbooks.render.ReplacedFireballRenderer;
 import net.mehvahdjukaar.amendments.AmendmentsClient;
 import net.mehvahdjukaar.amendments.reg.ModRegistry;
 import net.mehvahdjukaar.moonlight.api.platform.ClientHelper;

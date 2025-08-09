@@ -1,2 +1,2 @@
-# spellboundfirecharges
+# Spellbound Fire Charges
 A mod that combines the fireball/fire charge systems from both Amendments and Iron's Spells 'n Spellbooks.

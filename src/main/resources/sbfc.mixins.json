@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "com.flarelabsmc.sbfc.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "${mod_id}.refmap.json",
+  "mixins": [
+    "AmendmentsClientMixin",
+    "MagicFireballMixin",
+    "MediumFireballMixin"
+  ],
+  "client": [],
+  "minVersion": "0.8.5"
+}

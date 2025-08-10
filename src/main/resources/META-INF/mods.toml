@@ -29,11 +29,11 @@ description='''${mod_description}'''
     modId="irons_spellbooks"
     mandatory=true
     versionRange="${iss_version_range}"
-    ordering="AFTER"
+    ordering="NONE"
     side="BOTH"
 [[dependencies.${mod_id}]]
     modId="amendments"
     mandatory=true
     versionRange="${amendments_version_range}"
-    ordering="AFTER"
+    ordering="NONE"
     side="BOTH"
